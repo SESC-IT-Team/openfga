@@ -1,0 +1,14 @@
+module certificates_service
+
+type certificate
+  relations
+    # Справка обязательно привязана к какому-то отделу школы
+    define department: [department]
+    
+    # Создатель справки (ученик / любой юзер)
+    define creator: [user]
+
+    # Логика чтения: читать может ЛИБО создатель, 
+    # ЛИБО админ того отдела, к которому привязана справка
+    define can_read: creator or admin from department
+    define can_change_status: admin from department
